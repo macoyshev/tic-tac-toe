@@ -1,20 +1,16 @@
 import typer
+from curses import wrapper
 
-app = typer.Typer()
+def init(width: str, height: str):
+    typer.echo(f"w:{width}, h: {height}")
+    wrapper(main)
+    
 
-
-@app.command()
-def hello(name: str):
-    typer.echo(f"Hello {name}")
-
-
-@app.command()
-def goodbye(name: str, formal: bool = False):
-    if formal:
-        typer.echo(f"Goodbye Ms. {name}. Have a good day.")
-    else:
-        typer.echo(f"Bye {name}!")
-
+def main(stdscr):
+    stdscr.clear()
+    stdscr.addstr(0, 0, "hello")
+    stdscr.refresh()
+    stdscr.getkey()
 
 if __name__ == "__main__":
-    app()
+    typer.run(init)
