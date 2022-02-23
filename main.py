@@ -1,16 +1,18 @@
+
 import typer
 from curses import wrapper
+from field import Field
 
-def init(width: str, height: str):
-    typer.echo(f"w:{width}, h: {height}")
+
+def init(width: int, height: int):
+    Field.init(width, height)
     wrapper(main)
     
 
 def main(stdscr):
-    stdscr.clear()
-    stdscr.addstr(0, 0, "hello")
-    stdscr.refresh()
-    stdscr.getkey()
+    if Field.isThereSave():
+        
+    
 
 if __name__ == "__main__":
     typer.run(init)
