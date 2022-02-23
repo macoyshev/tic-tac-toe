@@ -1,5 +1,6 @@
 import os
 import pickle
+import re
 
 
 class Field:
@@ -7,6 +8,18 @@ class Field:
     __width: int
     __moves: list
     __savePath = "save.pickle"
+    
+    @staticmethod
+    def getWidth():
+        return Field.__width * 2 + 1;\
+    
+    @staticmethod
+    def getMoves():
+        return Field.__moves
+    
+    @staticmethod
+    def getHeigth():
+        return Field.__height;\
     
     @staticmethod
     def init(width: int, height: int):
