@@ -1,39 +1,22 @@
-import curses
+
 import typer
 import curses
 from curses import wrapper
-from field import Field
+from tictactoe import TicTacToe
+from settings import Settings
 
 
-def init(width: int, height: int):
-    Field.init(width, height)
+def init(rows: int, colums: int):
+    Settings.rows(rows)
+    Settings.colums(colums)
     wrapper(main)
     
-
-def main(screen):
-    if Field.isThereSave():
-        screen.clear()
-        screen.addstr(0,0, "There is game save, want to load ?")
-        key = screen.getkey()
-        
-        if key == "y":
-            Field.loadSave();
-            
-    for x in range(Field.getWidth()):
-        for y in range(Field.getHeigth()):
-            if x % 2 == 0:
-                screen.addstr(y, x, "|")
-    
-    for move in Field.getMoves():
-        x = move[0]
-        y = move[0]
-        screen.addstr(y, x, "X")
-    
-    x, y = 1, 0
-
+def play(screen, game: TicTacToe):
+    y, x = 0, 1
     while True:
         screen.move(y, x)
         screen.refresh()
+        
         try:
             key = screen.getkey()
         except:
@@ -41,21 +24,81 @@ def main(screen):
             
         if key == "KEY_UP":
             if (y > 0):
-                y-=1
+                y -= 1
+                
         if key == "KEY_DOWN":
-            if (y < Field.getHeigth() - 1):
-                y+=1
+            if (y < game.field.height - 1):
+                y += 1
+                
         if key == "KEY_LEFT":
             if (x > 1):
-                x-=2
+                x -= 2
+                
         if key == "KEY_RIGHT":
-            if (x < Field.getWidth() - 2):
-                x+=2
+            if (x < game.field.width - 2):
+                x += 2
+                
         if key == "x":
-            screen.addstr(y,x, "x")
+            if [y, x] not in game.field.userMoves and [y, x] not in game.field.botMoves:
+                game.field.addUserMove(y, x)
+                game.field.addBotMove()
+                
+                if game.field.isFull():
+                    exit(1)
+
+                
+                botMove = game.field.getLastBotMove()
+            
+                screen.addstr(y, x, "x") 
+                screen.addstr(botMove[0], botMove[1], "o")
+        
+        if key == "s":
+            game.saveGame()
+            
+            screen.addstr(game.field.height + 2, 0, "game saved")
         if key == "q":
             raise typer.Exit()
         
+
+def drawField(screen, game: TicTacToe):
+    for x in range(game.field.width):
+        for y in range(game.field.height):
+            if x % 2 == 0:
+                screen.addstr(y, x, "|")
+
+
+def main(screen):
+    game = TicTacToe()
+    
+    if game.searchSaves():
+        screen.addstr(0, 0, game.loadSaveMessage)
+        answer = screen.getkey()
+        if answer == 'y':
+            game.loadSave()
+        game.eraseSaves()
+    
+    screen.clear()
+
+    drawField(screen, game)
+    
+    for move in game.field.userMoves:
+        x = move[1]
+        y = move[0]
+        screen.addstr(y, x, "x")
+    
+    for move in game.field.botMoves:
+        x = move[1]
+        y = move[0]
+        screen.addstr(y, x, "o") 
+    
+    x, y = 1, 0
+    
+    screen.addstr(game.field.height, 0,"press 'q' to quit")
+    screen.addstr(game.field.height + 1, 0,"press 's' to save")
+
+    while True:
+        play(screen, game)
+         
          
 if __name__ == "__main__":
     typer.run(init)
