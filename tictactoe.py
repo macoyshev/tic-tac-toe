@@ -1,6 +1,10 @@
+from math import e
+import re
 from field import Field
 import os
 import pickle
+from settings import Settings
+from functools import reduce
 
 
 class TicTacToe:
@@ -10,24 +14,8 @@ class TicTacToe:
         self.userSavePath = "saves/userMoves.pickle"
         self.botSavePath = "saves/botMoves.pickle"
         
-        self.field = Field()
+        self.field = Field()        
     
-    @property
-    def winner(self):
-        userRows = {y: [] for y in range(self.height)}
-        botRows = {y: [] for y in range(self.height)}
-        
-        userColunms ={x: [] for x in range(1, self.field.width, 2)}
-        botColunms ={x: [] for x in range(1, self.field.width, 2)}
-        
-        for move in self.userMoves:
-            y, x = move
-            userRows[y].append(x)
-        
-        for move in self.useroves:
-            y, x = move
-            botRows[y].append(x
-        
     
     def saveGame(self):
         with open(self.userSavePath, "wb") as file:

@@ -43,9 +43,11 @@ def play(screen, game: TicTacToe):
                 game.field.addUserMove(y, x)
                 game.field.addBotMove()
                 
+                # if game.winner():
+                #     return game.winner()
+                
                 if game.field.isFull():
-                    exit(1)
-
+                    return "draw"
                 
                 botMove = game.field.getLastBotMove()
             
@@ -96,9 +98,15 @@ def main(screen):
     screen.addstr(game.field.height, 0,"press 'q' to quit")
     screen.addstr(game.field.height + 1, 0,"press 's' to save")
 
-    while True:
-        play(screen, game)
-         
+    res = play(screen, game)
+    
+    screen.clear()
+    if res in ["bot", "user"]:
+        screen.addstr(0, 0, f"WINNER: {res}")
+    else:
+        screen.addstr(0, 0, f"DRAW")
+    
+    screen.getch()     
          
 if __name__ == "__main__":
     typer.run(init)
