@@ -3,24 +3,23 @@ from settings import Settings
 
 class Field:
     def __init__(self):
-        self.rows = Settings.rows
-        self.columns = Settings.colums
-        self.body = [[None] * self.columns for _ in range(self.rows)]
-        self.emptyCells = self.rows * self.columns
-        self.lastMove = None
+        self.ROWS_COUNT = Settings.rows
+        self.COLUMNS_COUNT = Settings.colums
+        self.WIDTH = Settings.getWidth()
+        self.HEIGHT = Settings.getHeight()
+        self.emptyCellsCount = self.ROWS_COUNT * self.COLUMNS_COUNT
+        self.body = [[None] * self.COLUMNS_COUNT for _ in range(self.ROWS_COUNT)]
 
     def addUserMove(self, row: int, col: int):
-        self.emptyCells -= 1
+        self.emptyCellsCount -= 1
         self.body[row][col] = "x"
-        self.lastMove = "user"
 
     def addBotMove(self, row: int, col: int):
-        self.emptyCells -= 1
+        self.emptyCellsCount -= 1
         self.body[row][col] = "o"
-        self.lastMove = "bot"
 
     def isFull(self):
-        return self.emptyCells == 0
+        return self.emptyCellsCount == 0
 
-    def isFree(self, row, col):
+    def is_cell_free(self, row, col):
         return self.body[row][col] == None
