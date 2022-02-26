@@ -58,8 +58,6 @@ class TicTacToe:
                 self.winner = "bot"
             return True
         else:
-            if self.field.isFull():
-                return True
             return False
 
     def get_field(self):
@@ -99,6 +97,16 @@ class TicTacToe:
         return (
             "Press 'y' to load last saved game, otherwise any key to start new game\n"
         )
+
+    def get_result(self):
+        result = "-" * self.field.WIDTH * 2
+        if self.winner != None:
+            result += f"\nWinner: {self.winner}"
+        else:
+            result += "\nDraw"
+
+        result += "\nPress any key to exit\n"
+        return result
 
     def make_user_move(self):
         y, x = self.cursor.y, self.cursor.x

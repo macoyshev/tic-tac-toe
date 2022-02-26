@@ -1,3 +1,5 @@
+from os import scandir
+from click import echo
 import typer
 from curses import wrapper
 from cursor import Cursor
@@ -24,7 +26,7 @@ def play(screen):
     screen.addstr(0, 0, game.get_field())
     screen.addstr(game.field.HEIGHT, 0, game.get_menu())
 
-    while not game.is_winner():
+    while not game.field.isFull():
         screen.move(game.cursor.y, game.cursor.x)
         screen.refresh()
 
@@ -50,9 +52,15 @@ def play(screen):
             if game.is_move_success:
                 screen.addstr(game.move_y, game.move_x, "x")
 
+            if game.is_winner():
+                break
+
             game.make_bot_move()
             if game.is_move_success:
                 screen.addstr(game.move_y, game.move_x, "o")
+
+            if game.is_winner():
+                break
 
         if key == "s":
             game.save_game()
@@ -61,23 +69,20 @@ def play(screen):
         if key == "q":
             raise typer.Exit()
 
-    screen.clear()
-    if game.winner != None:
-        screen.addstr(0, 0, f"winner: {game.winner}")
-    else:
-        screen.addstr(0, 0, "draw")
+    screen.addstr(game.field.HEIGHT, 0, game.get_result())
 
     screen.refresh()
     screen.getch()
 
 
 def main(rows: int, colums: int):
-    Settings.colums = colums
-    Settings.rows = rows
-
-    wrapper(play)
-
+    try:
+        Settings.setColums(colums)
+        Settings.setRows(rows)
+        wrapper(play)
+    except AttributeError as err:
+        typer.echo(err.args[0])
 
 if __name__ == "__main__":
-    # main(3, 3)
+    #main(3, 3)
     typer.run(main)
