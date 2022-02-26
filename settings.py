@@ -1,6 +1,4 @@
 class Settings:
-    userSign = "x"
-    botSign = "o"
     colums: int
     rows: int
 

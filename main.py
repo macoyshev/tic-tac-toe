@@ -22,7 +22,7 @@ def play(screen):
     game.displayField(screen)
     game.displayMenu(screen)
 
-    while not game.field.isFull():
+    while not game.isWinner():
         screen.move(game.cursor.y, game.cursor.x)
         screen.refresh()
         try:
@@ -52,15 +52,25 @@ def play(screen):
 
         if key == "q":
             raise typer.Exit()
-        
+    
+    screen.clear()
+    if game.winner != None:
+        screen.addstr(0, 0, f"winner: {game.winner}")
+    else:
+        screen.addstr(0, 0, "draw")
+    
+    screen.refresh()
+    screen.getch()
+    
 
 def main(rows: int, colums: int):
     Settings.colums = colums
     Settings.rows = rows
     
     wrapper(play)
+    
 
 
 if __name__ == "__main__":
     # typer.run(main)
-    main(3,3)
+    typer.run(main)

@@ -1,6 +1,9 @@
+
+from decimal import ROUND_HALF_DOWN
 import random
 import os
 import pickle
+import re
 from cursor import Cursor
 from settings import Settings
 from field import Field
@@ -13,6 +16,46 @@ class TicTacToe:
         self.field = Field()
         self.cursor = Cursor()
         self.winner = None
+
+    def isWinner(self):
+        field = self.field.body
+        sign = None
+        
+        if self.field.rows >= self.field.columns:
+            for row in field:
+                if len(set(row)) == 1:
+                    if row[0]:
+                        sign = row[0]
+                        break
+                
+        if self.field.rows <= self.field.columns:
+            for col in range(self.field.columns):
+                if len({field[row][col] for row in range(self.field.rows)}) == 1:
+                    if field[0][col]:
+                        sign = field[0][col]
+                        break
+        
+        if self.field.rows == self.field.columns:
+            if len({field[i][i] for i in range(self.field.rows)}) == 1:    
+                if field[0][0]:
+                    sign = field[0][0]
+        
+            if len({field[i][self.field.rows - 1 - i] for i in range(self.field.rows)}) == 1:    
+                if field[0][self.field.rows - 1]:
+                    sign = field[0][self.field.rows - 1]
+                    
+        if sign != None:
+            if sign == "x":
+                self.winner = "user"
+            else:
+                self.winner = "bot"
+            return True
+        else:
+            if self.field.isFull():
+                return True
+            return False
+
+        
 
     def displayField(self, screen):
         screen.clear()
@@ -39,23 +82,27 @@ class TicTacToe:
         row, col = self.getRowAndColumnFromCoordinates(y, x)
 
         if self.field.isFree(row, col):
+            
             self.field.addUserMove(row, col)
-            screen.addstr(y, x, Settings.userSign)
+            
+            screen.addstr(y, x, "x")
 
     def botMove(self, screen):
         if self.field.isFull() or self.field.lastMove == "bot":
             return
+        
         row, col = 0, 0
         while not self.field.isFree(row, col):
             rand = random.randint(0, 1)
             if rand == 1:
-                row = (row + 1) % Settings.rows
+                row = (row + 1) % self.field.rows
             else:
-                col = (col + 1) % Settings.colums
+                col = (col + 1) % self.field.columns
+
 
         y, x = self.getCordinatesFromRowsAndColums(row, col)
         self.field.addBotMove(row, col)
-        screen.addstr(y, x, Settings.botSign)
+        screen.addstr(y, x, "o")
         
 
     def saveGame(self):
