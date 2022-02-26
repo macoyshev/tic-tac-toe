@@ -1,11 +1,13 @@
 class Settings:
+    userSign = "x"
+    botSign = "o"
     colums: int
     rows: int
-    
-    @staticmethod
-    def rows(rows: int):
-        Settings.rows = rows
 
     @staticmethod
-    def colums(colums: int):
-        Settings.colums = colums
+    def getWidth() -> int:
+        return Settings.colums * 2 + 1
+
+    @staticmethod
+    def getHeight() -> int:
+        return Settings.rows
