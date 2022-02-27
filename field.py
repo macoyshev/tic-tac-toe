@@ -5,7 +5,7 @@ class Field:
     """
     Responsible for adding bot, user moves, and containing these
     """
-    
+
     def __init__(self):
         self.ROWS_COUNT = Settings.rows
         self.COLUMNS_COUNT = Settings.colums
