@@ -33,4 +33,5 @@ You must have 3.6+
 #### External libraries
  
 -`typer`
+
 -`curses`
