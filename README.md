@@ -7,6 +7,7 @@ Tic-tac-toe is a logical game between two opponents on a square field of N by M 
 ####Run the game
 
 ![image1](images/gameplay.png)
+
 Run the following command from the root directory to run the game:
 ```
 $ python main.py N M
@@ -14,6 +15,7 @@ $ python main.py N M
 Where **_N_** and **_M_** are arbitrary numbers, if there is a save, the game will offer to load the last saved game
 
 ####Keyboard Commands
+
 | Key | Action |
 |---|---|
 |`→` `←` `↑` `↓`| move
@@ -23,8 +25,12 @@ Where **_N_** and **_M_** are arbitrary numbers, if there is a save, the game wi
 |`y`| load save|
 
 _Note: you can load the save only during the start, if it is, otherwise the save will lost_
+
 ####Requerements
+
 You must have 3.6+
+
 ####External libraries
+ 
 -`typer`
 -`curses`
