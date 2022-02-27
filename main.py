@@ -83,6 +83,7 @@ def main(rows: int, colums: int):
     except AttributeError as err:
         typer.echo(err.args[0])
 
+
 if __name__ == "__main__":
-    #main(3, 3)
+    # main(3, 3)
     typer.run(main)
