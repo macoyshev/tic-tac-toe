@@ -136,7 +136,7 @@ class TicTacToe:
         row, col = self.__getRowAndColumnFromPossition(y, x)
 
         if self.field.is_cell_free(row, col):
-            self.field.addUserMove(row, col)
+            self.field.add_user_move(row, col)
 
             self.is_move_success = True
             self.move_x = x
@@ -159,7 +159,7 @@ class TicTacToe:
                 row = (row + 1) % self.field.ROWS_COUNT
             else:
                 col = (col + 1) % self.field.COLUMNS_COUNT
-        self.field.addBotMove(row, col)
+        self.field.add_bot_move(row, col)
 
         y, x = self.__get_possition_from_row_and_colum(row, col)
         self.is_move_success = True
