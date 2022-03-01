@@ -133,7 +133,7 @@ class TicTacToe:
         """
 
         y, x = self.cursor.y, self.cursor.x
-        row, col = self.__getRowAndColumnFromPossition(y, x)
+        row, col = self.__get_row_and_column_from_possition(y, x)
 
         if self.field.is_cell_free(row, col):
             self.field.add_user_move(row, col)
@@ -188,7 +188,7 @@ class TicTacToe:
     def has_save(self):
         return os.path.getsize(self.__gameSavePath) != 0
 
-    def __getRowAndColumnFromPossition(self, y, x):
+    def __get_row_and_column_from_possition(self, y, x):
         """
         Converts y, x to row-column format
         """
