@@ -8,7 +8,7 @@ Tic-tac-toe is a logical game between two opponents on a square field of N by M 
 
 ![image1](images/gameplay.png)
 
-Run the following command from the root directory to run the game:
+Run the following command from the "/titactoe/" directory to run the game:
 ```
 $ python main.py N M
 ```
