@@ -6,7 +6,7 @@ class Settings:
     rows: int
 
     @staticmethod
-    def setColums(cols) -> None:
+    def set_colums(cols) -> None:
         if cols < Settings.get_max_columns_count():
             Settings.colums = cols
         else:
@@ -15,7 +15,7 @@ class Settings:
             )
 
     @staticmethod
-    def setRows(rows) -> None:
+    def set_rows(rows) -> None:
         if rows < Settings.get_max_rows_count():
             Settings.rows = rows
         else:
@@ -24,16 +24,17 @@ class Settings:
             )
 
     @staticmethod
-    def getWidth() -> int:
+    def get_width() -> int:
         return Settings.colums * 2 + 1
 
     @staticmethod
-    def getHeight() -> int:
+    def get_height() -> int:
         return Settings.rows
 
     @staticmethod
     def get_max_columns_count() -> int:
         return os.get_terminal_size().columns // 2
-
+    
+    @staticmethod
     def get_max_rows_count() -> int:
         return os.get_terminal_size().lines - 3
