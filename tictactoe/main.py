@@ -26,7 +26,7 @@ def play(screen):
     screen.addstr(0, 0, game.get_field())
     screen.addstr(game.field.HEIGHT, 0, game.get_menu())
 
-    while not game.field.isFull():
+    while not game.field.is_full():
         screen.move(game.cursor.y, game.cursor.x)
         screen.refresh()
 
@@ -77,13 +77,12 @@ def play(screen):
 
 def main(rows: int, colums: int):
     try:
-        Settings.setColums(colums)
-        Settings.setRows(rows)
+        Settings.set_colums(colums)
+        Settings.set_rows(rows)
         wrapper(play)
     except AttributeError as err:
         typer.echo(err.args[0])
 
 
 if __name__ == "__main__":
-    # main(3, 3)
     typer.run(main)
