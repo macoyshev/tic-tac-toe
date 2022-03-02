@@ -13,10 +13,8 @@ def play(screen):
 
     if game.has_save():
         screen.addstr(0, 0, game.get_load_message())
-        try:
-            ans = screen.getkey()
-        except:
-            ans = None
+
+        ans = screen.getkey()
 
         if ans == "y":
             game.load_save()
