@@ -30,11 +30,8 @@ def play(screen):
         screen.move(game.cursor.y, game.cursor.x)
         screen.refresh()
 
-        try:
-            key = screen.getkey()
-        except:
-            key = None
-
+        key = screen.getkey()
+  
         if key == "KEY_UP":
             game.cursor.move(Cursor.UP)
 
@@ -55,8 +52,8 @@ def play(screen):
             if game.is_winner():
                 break
 
-            game.make_bot_move()
             if game.is_move_success:
+                game.make_bot_move()
                 screen.addstr(game.move_y, game.move_x, "o")
 
             if game.is_winner():
@@ -75,7 +72,7 @@ def play(screen):
     screen.getch()
 
 
-def main(rows: int, colums: int):
+def main(rows: int = typer.Argument(3), colums: int = typer.Argument(3)):
     try:
         Settings.set_colums(colums)
         Settings.set_rows(rows)
