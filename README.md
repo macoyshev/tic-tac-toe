@@ -12,7 +12,7 @@ Run the following command from the "/titactoe/" directory to run the game:
 ```
 $ python main.py N M
 ```
-Where **_N_** and **_M_** are arbitrary numbers, if there is a save, the game will offer to load the last saved game
+Where **_N_** and **_M_** are optionals numbers, if there is a save, the game will offer to load the last saved game. 
 
 #### Keyboard Commands
 
